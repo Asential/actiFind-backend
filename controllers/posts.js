@@ -20,6 +20,20 @@ export const getPosts = async (req, res) => {
     }    
 }
 
+export const getPost = async (req, res) => {
+    
+    // Braindead numrod thinks query and params are the same so ends up spending 2 hourse debugging...
+    const {id} = req.params;
+    try{
+        console.log("PLACE 2" + id);
+        const post = await PostMessage.findById(id);
+        res.status(200).json(post);
+
+    } catch (error){
+        res.status(404).json({ message: error.message });
+    }    
+}
+
 export const createPost = async (req, res) => {
     const post = req.body;
     const newPost = new PostMessage({...post, host: req.userId, createdAt: new Date().toISOString()});
