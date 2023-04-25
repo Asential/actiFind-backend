@@ -64,3 +64,22 @@ export const likePost = async (req, res) => {
 
     res.json(updatedPost);
 }
+
+export const getPostsBySearch = async (req, res) => {
+    
+    // req.query is for query parameters and req.params is for search parameters
+    const { searchQuery, tags } = req.query;
+
+    try {
+        console.log(searchQuery);
+        const title = new RegExp(searchQuery, "i"); // 'i' stands for ignore case
+
+        // $or for either tags or title search.
+        // const posts = await PostMessage.find({$or: [ {title}, {tags: { $in: tags.split(',') }}]});
+        const posts = await PostMessage.find({ $or: [ { title }, { tags: { $in: tags.split(',') } } ]});
+        console.log(posts);
+        res.json({ data: posts });
+    } catch (error) {    
+        res.status(404).json({ message: error.message });
+    }
+}
