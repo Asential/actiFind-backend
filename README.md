@@ -8,29 +8,43 @@
 - [x] Backend
 - [x] Frontend
 
-Technologies to be used
+[Frontend Repository](https://github.com/Asential/actiFind-frontend)
+
+Technologies used
 
 ### Backend
 
 - [x] Express Framework
-- [x] MongoDB 
+- [x] MongoDB Atlas
 - [x] REST API
+- [x] Token Based Authentication
 
 #### APIs
 - [x] Login
 - [x] Registration
 - [x] JWT Token Authentication Middleware
-- [ ] Password Recovery
-- [ ] Admin Portal
+- [x] Post Creation
+- [x] Post Deletion
+- [x] Edit Post 
+- [x] Post Details 
+- [x] Like Post
+- [x] Search Functionalities with Tags
 
 
 ## Frontend 
 
 - [x] React
-- [ ] Zustand (currently the repository contains redux but I could not figure it out)
-- [ ] MaterialUI
-- [ ] Login UI
-- [ ] Registration UI
+- [X] Redux
+- [x] Navigation Bar UI
+- [x] Login UI
+- [x] Registration UI
+- [x] Search Bar UI
+- [x] Post Cards UI
+- [x] Home Page
+- [x] Post Details Page
+- [x] Google Authentication using OAuth2
+- [x] Pagination 
+- [x] Media Query Scaling
 
 Current backend packages used.
 
@@ -40,5 +54,17 @@ Current backend packages used.
 - cors
 - jsonwebtoken
 - bcryptjs
+- materialui
+- dotenv
 
-[Frontend Repository](https://github.com/Asential/actiFind-frontend)
+Current frontend packages used.
+- @material-ui/[core/icons/labs/]
+- axios
+- jwt-decode
+- react-dom
+- react-redux
+- react-file-base64
+- redux-thunk
+- react=oauth/google
+
+
