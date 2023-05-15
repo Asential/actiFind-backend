@@ -12,7 +12,7 @@ export const getPosts = async (req, res) => {
         const totalPosts = await PostMessage.countDocuments({});
 
         const posts = await PostMessage.find().sort({_id:-1}).limit(LIMIT).skip(startIndex);
-        console.log(Number(page));
+        // console.log(Number(page));
         res.status(200).json({data: posts, currPage: Number(page), numOfPages: Math.ceil(totalPosts/LIMIT)});
 
     } catch (error){
@@ -25,7 +25,6 @@ export const getPost = async (req, res) => {
     // Braindead numrod thinks query and params are the same so ends up spending 2 hourse debugging...
     const {id} = req.params;
     try{
-        console.log("PLACE 2" + id);
         const post = await PostMessage.findById(id);
         res.status(200).json(post);
 
@@ -37,7 +36,7 @@ export const getPost = async (req, res) => {
 export const createPost = async (req, res) => {
     const post = req.body;
     const newPost = new PostMessage({...post, host: req.userId, createdAt: new Date().toISOString()});
-    console.log("creating new post")
+    console.log("Creating new post")
     try{
         await newPost.save();
         res.status(201).json(newPost);
@@ -87,19 +86,34 @@ export const likePost = async (req, res) => {
     res.json(updatedPost);
 }
 
+export const commentPost = async (req, res) => {
+    // 'id' comes from the request parameters.
+    const {id: _id} = req.params;
+
+    // 'value' is passed as an object in the api so it is contained in the body.
+    const {value} = req.body;
+
+    const post = await PostMessage.findById(_id);
+
+    post.comments.push(value);
+    const updatedPost = await PostMessage.findByIdAndUpdate(_id, post, {new: true});
+
+    res.json(updatedPost);
+}
+
 export const getPostsBySearch = async (req, res) => {
     
     // req.query is for query parameters and req.params is for search parameters
     const { searchQuery, tags } = req.query;
 
     try {
-        console.log(searchQuery);
+        // console.log(searchQuery);
         const title = new RegExp(searchQuery, "i"); // 'i' stands for ignore case
 
         // $or for either tags or title search.
         // const posts = await PostMessage.find({$or: [ {title}, {tags: { $in: tags.split(',') }}]});
         const posts = await PostMessage.find({ $or: [ { title }, { tags: { $in: tags.split(',') } } ]});
-        console.log(posts);
+        // console.log(posts);
         res.json({ data: posts });
     } catch (error) {    
         res.status(404).json({ message: error.message });
